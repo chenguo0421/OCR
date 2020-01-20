@@ -351,13 +351,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             try {
                 camera.startPreview();
                 Bitmap bitmap = Bytes2Bimap(data);
-                FileUtils.saveToSDCard(bitmap);
-                FileUtils.saveToSDCard(PictureHandler.getBinaryImage(bitmap, PictureHandler.TYPE_MATRIX));
-//                FileUtils.saveToSDCard(PictureHandler.getBinaryImage(bitmap, PictureHandler.TYPE_MATRIX));
-//                FileUtils.saveToSDCard(PictureHandler.getBinaryImage(bitmap, PictureHandler.TYPE_OTSU));
-                if (true){
-                    return;
-                }
                 if (mScreenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                 } else {
                     bitmap = BitmapUtil.createRotateBitmap(bitmap);
