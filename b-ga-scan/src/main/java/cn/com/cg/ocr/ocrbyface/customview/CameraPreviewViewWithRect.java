@@ -15,10 +15,11 @@ import android.widget.FrameLayout;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.com.cg.ocr.common.bean.ScanResult;
+import cn.com.cg.ocr.common.intf.OnScanSuccessListener;
+import cn.com.cg.ocr.common.utils.LightUtil;
 import cn.com.cg.ocr.ocrbyface.customview.contract.PreviewContract;
-import cn.com.cg.ocr.ocrbyface.customview.intf.OnScanSuccessListener;
 import cn.com.cg.ocr.ocrbyface.customview.presenter.PreviewPresenter;
-import cn.com.cg.ocr.utils.LightUtils;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -85,11 +86,11 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
                     if ((boolean)button.getTag()){
                         button.setTag(false);
                         button.setText("手电筒-开");
-                        LightUtils.closeFlashLight(mCamera);
+                        LightUtil.closeFlashLight(mCamera);
                     }else {
                         button.setTag(true);
                         button.setText("手电筒-关");
-                        LightUtils.openFlashLight(mCamera);
+                        LightUtil.openFlashLight(mCamera);
                     }
                 }
             }
@@ -293,7 +294,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
         }
 
         if (mCamera != null) {
-            LightUtils.closeFlashLight(mCamera);
+            LightUtil.closeFlashLight(mCamera);
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
@@ -395,13 +396,12 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
 
     /**
      * 得到正确证件号码，回调
-     * @param id
-     * @param tempFilePath
+     * @param bean
      */
     @Override
-    public void onOCRSuccess(String id, String tempFilePath) {
+    public void onOCRSuccess(ScanResult bean) {
         if (listener != null) {
-            listener.onOCRSuccess(id,tempFilePath);
+            listener.onOCRSuccess(bean);
         }
     }
 

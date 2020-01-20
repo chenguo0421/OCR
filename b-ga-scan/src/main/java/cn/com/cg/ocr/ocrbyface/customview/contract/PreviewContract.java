@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.hardware.Camera;
 
+import cn.com.cg.ocr.common.bean.ScanResult;
+
 /**
  * Discription  {}
  * author  chenguo7
@@ -14,7 +16,7 @@ public interface PreviewContract {
     
     interface IView{
 
-        void onOCRSuccess(String id, String tempFilePath);
+        void onOCRSuccess(ScanResult bean);
 
         Context getContext();
     }

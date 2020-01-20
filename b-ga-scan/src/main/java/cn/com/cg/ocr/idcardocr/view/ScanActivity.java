@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import cn.com.cg.ocr.R;
+import cn.com.cg.ocr.common.bean.ScanResult;
 import cn.com.cg.ocr.idcardocr.contract.ScanContract;
 import cn.com.cg.ocr.idcardocr.presenter.ScanPresenter;
 import cn.com.cg.ocr.idcardocr.utils.DisplayUtil;
@@ -139,9 +140,9 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
     }
 
     @Override
-    public void onOCRSuccess(String content, String tempFileName) {
-        Log.e("CG", "onOCRSuccess id = " + content);
-        Toast.makeText(this,"id = "+content,Toast.LENGTH_SHORT).show();
+    public void onOCRSuccess( ScanResult scanResult) {
+        Log.e("CG", "onOCRSuccess id = " + scanResult.id);
+        Toast.makeText(this,"id = "+scanResult.id,Toast.LENGTH_SHORT).show();
     }
 
     @Override

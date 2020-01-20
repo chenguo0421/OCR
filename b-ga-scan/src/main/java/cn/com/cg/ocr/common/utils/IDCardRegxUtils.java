@@ -1,16 +1,34 @@
-package cn.com.cg.ocr.idcardocr.utils;
+package cn.com.cg.ocr.common.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.com.cg.ocr.common.bean.ScanResult;
+
 /**
  * Discription  {}
  * author  chenguo7
- * Date  2020/1/16 15:40
+ * Date  2020/1/20 16:45
  */
 public class IDCardRegxUtils {
+
+    public static ScanResult checkIdCard(String idNum){
+        if (idNum != null && (idNum.length() == 15 || idNum.length() == 18)) {
+            CheckIDCardRule regex = new CheckIDCardRule(idNum, null);
+            boolean isOk = regex.validate();
+            if (isOk){
+                ScanResult result = new ScanResult();
+                result.id = idNum;
+                result.birthday = new SimpleDateFormat("yyyy-MM-dd").format(regex.getBirthDate());
+                result.sex = regex.isMale()?"男":"女";
+                return result;
+            }
+        }
+        return null;
+    }
 
 
     public static boolean is18ByteIdCardComplex(String idCard) {

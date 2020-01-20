@@ -1,4 +1,4 @@
-package cn.com.cg.ocr.idcardocr.utils;
+package cn.com.cg.ocr.common.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;

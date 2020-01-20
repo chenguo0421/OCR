@@ -1,4 +1,4 @@
-package cn.com.cg.ocr.utils;
+package cn.com.cg.ocr.common.utils;
 
 
 import android.hardware.Camera;
@@ -8,7 +8,7 @@ import android.hardware.Camera;
  * author  chenguo7
  * Date  2020/1/20 11:46
  */
-public class LightUtils {
+public class LightUtil {
 
     /**
      * 打开闪光灯

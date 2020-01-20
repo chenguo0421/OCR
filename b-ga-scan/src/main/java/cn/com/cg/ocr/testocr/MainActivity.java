@@ -30,11 +30,10 @@ import java.io.IOException;
 import java.util.List;
 
 import cn.com.cg.ocr.R;
+import cn.com.cg.ocr.common.utils.FileUtils;
 import cn.com.cg.ocr.testocr.utils.BitmapUtil;
 import cn.com.cg.ocr.testocr.utils.CameraUtil;
-import cn.com.cg.ocr.testocr.utils.PictureHandler;
 import cn.com.cg.ocr.testocr.view.PreviewBorderView;
-import cn.com.cg.ocr.idcardocr.utils.FileUtils;
 
 /**
  * Discription  {}

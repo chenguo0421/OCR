@@ -9,8 +9,9 @@ import android.widget.Toast;
 
 
 import cn.com.cg.ocr.R;
+import cn.com.cg.ocr.common.bean.ScanResult;
+import cn.com.cg.ocr.common.intf.OnScanSuccessListener;
 import cn.com.cg.ocr.ocrbyface.customview.CameraPreviewViewWithRect;
-import cn.com.cg.ocr.ocrbyface.customview.intf.OnScanSuccessListener;
 
 /**
  * Discription  {}
@@ -31,8 +32,8 @@ public class FaceCaptureActivity extends AppCompatActivity implements OnScanSucc
     }
 
     @Override
-    public void onOCRSuccess(String id, String tempFilePath) {
-        Log.e("CG", "onOCRSuccess id = " + id);
-        Toast.makeText(this,"id = "+id,Toast.LENGTH_SHORT).show();
+    public void onOCRSuccess(ScanResult bean) {
+        Log.e("CG", "onOCRSuccess id = " + bean.id);
+        Toast.makeText(this,"id = "+bean.id,Toast.LENGTH_SHORT).show();
     }
 }

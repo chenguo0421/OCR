@@ -1,4 +1,4 @@
-package cn.com.cg.ocr.utils;
+package cn.com.cg.ocr.common.utils;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  * author  chenguo7
  * Date  2020/1/20 15:23
  */
-public class OCRUtils {
+public class OCRUtil {
 
 
     public static void fixedSlicer(final AppCompatActivity activity) {

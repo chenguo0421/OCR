@@ -13,9 +13,8 @@ import android.util.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import cn.com.cg.ocr.testocr.utils.PictureHandler;
-import cn.com.cg.ocr.idcardocr.utils.FileUtils;
-import cn.com.cg.ocr.utils.ImageUtils;
+import cn.com.cg.ocr.common.utils.FileUtils;
+
 
 /**
  * Discription  {}

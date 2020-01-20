@@ -8,11 +8,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import cn.com.cg.ocr.idcardocr.bean.ScanResult;
+import cn.com.cg.ocr.common.bean.ScanResult;
+import cn.com.cg.ocr.common.utils.IDCardRegxUtils;
 import cn.com.cg.ocr.idcardocr.contract.ScanContract;
 import cn.com.cg.ocr.common.helper.IDCardOCRHelper;
 import cn.com.cg.ocr.idcardocr.model.PreviewDataModel;
-import cn.com.cg.ocr.idcardocr.utils.IDCardRegxUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -128,7 +128,10 @@ public class ScanPresenter implements ScanContract.Presenter {
                     idNumberBitmap.recycle();
                 }
 
-                emitter.onNext(new ScanResult(id,tempPath));
+                ScanResult idcardBean = new ScanResult();
+                idcardBean.id = id;
+                idcardBean.path = tempPath;
+                emitter.onNext(idcardBean);
                 emitter.onComplete();
             }
         })
@@ -166,8 +169,10 @@ public class ScanPresenter implements ScanContract.Presenter {
      * @param tempFilePath
      */
     private void checkIDOCRResult(String id, String tempFilePath) {
-        if (IDCardRegxUtils.is18ByteIdCardComplex(id)) {
-            mView.onOCRSuccess(id, tempFilePath);
+        ScanResult scanResult = IDCardRegxUtils.checkIdCard(id);
+        if (scanResult != null) {
+            scanResult.path = tempFilePath;
+            mView.onOCRSuccess(scanResult);
         }
     }
 }
