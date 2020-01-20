@@ -34,6 +34,6 @@ public class FaceCaptureActivity extends AppCompatActivity implements OnScanSucc
     @Override
     public void onOCRSuccess(ScanResult bean) {
         Log.e("CG", "onOCRSuccess id = " + bean.id);
-        Toast.makeText(this,"id = "+bean.id,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"id = "+bean.id + " 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
     }
 }

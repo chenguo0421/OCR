@@ -140,9 +140,9 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
     }
 
     @Override
-    public void onOCRSuccess( ScanResult scanResult) {
-        Log.e("CG", "onOCRSuccess id = " + scanResult.id);
-        Toast.makeText(this,"id = "+scanResult.id,Toast.LENGTH_SHORT).show();
+    public void onOCRSuccess( ScanResult bean) {
+        Log.e("CG", "onOCRSuccess id = " + bean.id);
+        Toast.makeText(this,"id = "+bean.id + " 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
     }
 
     @Override
