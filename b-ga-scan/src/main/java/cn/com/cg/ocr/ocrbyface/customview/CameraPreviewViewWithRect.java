@@ -7,7 +7,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import cn.com.cg.ocr.ocrbyface.customview.contract.PreviewContract;
 import cn.com.cg.ocr.ocrbyface.customview.intf.OnScanSuccessListener;
 import cn.com.cg.ocr.ocrbyface.customview.presenter.PreviewPresenter;
+import cn.com.cg.ocr.utils.LightUtils;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -71,8 +74,30 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
 
         mBoderView = new PreviewBorderView(getContext());
 
+        FrameLayout.LayoutParams btnParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final Button button = new Button(getContext());
+        button.setText("手电筒-开");
+        button.setTag(false);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (button.getTag() instanceof Boolean){
+                    if ((boolean)button.getTag()){
+                        button.setTag(false);
+                        button.setText("手电筒-开");
+                        LightUtils.closeFlashLight(mCamera);
+                    }else {
+                        button.setTag(true);
+                        button.setText("手电筒-关");
+                        LightUtils.openFlashLight(mCamera);
+                    }
+                }
+            }
+        });
+
         addView(mBoderView,params);
         addView(mShowView, params);
+        addView(button,btnParams);
     }
 
     /**
@@ -268,6 +293,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
         }
 
         if (mCamera != null) {
+            LightUtils.closeFlashLight(mCamera);
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
@@ -378,4 +404,5 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
             listener.onOCRSuccess(id,tempFilePath);
         }
     }
+
 }
