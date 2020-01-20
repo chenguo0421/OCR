@@ -141,6 +141,7 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
     @Override
     public void onOCRSuccess(String content, String tempFileName) {
         Log.e("CG", "onOCRSuccess id = " + content);
+        Toast.makeText(this,"id = "+content,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -184,7 +185,7 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         //每隔500ms识别一次
         if (oneShotDisposable == null) {
-            oneShotDisposable = Observable.interval(500, 200, TimeUnit.MILLISECONDS)
+            oneShotDisposable = Observable.interval(500, 500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(new Consumer<Long>() {
                         @Override

@@ -149,7 +149,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
      */
     private void oneShotFrame() {
         if (oneShotDisposable == null) {
-            oneShotDisposable = Observable.interval(500, 200, TimeUnit.MILLISECONDS)
+            oneShotDisposable = Observable.interval(500, 500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(new Consumer<Long>() {
                         @Override

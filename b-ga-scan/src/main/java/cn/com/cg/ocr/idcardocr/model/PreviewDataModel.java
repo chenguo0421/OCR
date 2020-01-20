@@ -99,10 +99,6 @@ public class PreviewDataModel {
      * 裁剪取景框内证件号码区域
      * 备注：方法内数值设置均与取景框内数值有关联，不可随意更改，若需要更改，需要同时更改取景框内相关数值
      * @param bitmap
-     *             int numLeft = (int) (mScanRect.left + 0.05 * mScanRect.width());
-     *             int numTtop = (int) (mScanRect.bottom - 0.6 * mScanRect.height());
-     *             int numRight = (int) (mScanRect.right - 0.83 * mScanRect.width());
-     *             int numBottom = (int) (mScanRect.bottom - 0.06 * mScanRect.height());
      * @return
      */
     public Bitmap clipIDCardNumberBitmap1(@NonNull Bitmap bitmap) {
@@ -110,15 +106,11 @@ public class PreviewDataModel {
         Bitmap bitmap1 = null;
         try {
             int x, y, w, h;
-//            x = (int) (bitmap.getWidth() * 0.4 + 0.5f);
-//            y = (int) (bitmap.getHeight() * 0.8 + 0.5f);
-//            w = (int) (bitmap.getWidth() * 0.54 + 0.5f);
-//            h= (int) (bitmap.getHeight() * 0.15 + 0.5f);
-
-            x = (int) (0);
+            x = (int) (bitmap.getWidth() * 0.4 + 0.5f);
             y = (int) (bitmap.getHeight() * 0.8 + 0.5f);
-            w = (int) (bitmap.getWidth());
+            w = (int) (bitmap.getWidth() * 0.54 + 0.5f);
             h= (int) (bitmap.getHeight() * 0.15 + 0.5f);
+
             bitmap1 = Bitmap.createBitmap(bitmap, x, y, w, h);
 
             /*传入bitmap参数，返回bitmap。 在使用tessdata时，只能检测ARGB_8888格式的bitmap,所以才多这一步转换，这里暂时没有用到，可以先注释掉，直接返回RGB_565的bitmap*/

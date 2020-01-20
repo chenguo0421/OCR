@@ -33,9 +33,8 @@ public class ScanPresenter implements ScanContract.Presenter {
     private final Context mContext;
     private final PreviewDataModel mPreViewDataModel;
     private IDCardOCRHelper idCardOCRHelper;
-    private static final int maxActive = 2;
+    private static final int maxActive = 8;
     private ArrayList<Disposable> disposables = new ArrayList<>();
-    private boolean isClip = false;
 
     public ScanPresenter(final Context context, ScanContract.View view) {
         mView = view;
@@ -93,9 +92,6 @@ public class ScanPresenter implements ScanContract.Presenter {
 
     @Override
     public void analysisIDCard(final byte[] data,final Camera camera,final Rect scanRect,final int svWidth,final int svHeight) {
-        if (isClip){
-            return;
-        }
         if (disposables!=null&&disposables.size()>maxActive){
             Disposable disposable = disposables.remove(0);
             if (!disposable.isDisposed()){
@@ -107,15 +103,12 @@ public class ScanPresenter implements ScanContract.Presenter {
             public void subscribe(ObservableEmitter<ScanResult> emitter) throws Exception {
                 Camera.Size previewSize = camera.getParameters().getPreviewSize();
 
-                isClip = true;
                 Bitmap clipedBitmap = mPreViewDataModel.clipScanRectBitmap(data, previewSize, scanRect, svWidth, svHeight);
                 if (clipedBitmap == null) {
-                    isClip = false;
                     return;
                 }
 
                 Bitmap idNumberBitmap = mPreViewDataModel.clipIDCardNumberBitmap1(clipedBitmap);
-                isClip = false;
                 String tempPath = mPreViewDataModel.saveToSDCard(idNumberBitmap);
                 if (idCardOCRHelper == null || !idCardOCRHelper.hasInit()) {
                     return;
@@ -156,7 +149,6 @@ public class ScanPresenter implements ScanContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        isClip = false;
                     }
 
                     @Override

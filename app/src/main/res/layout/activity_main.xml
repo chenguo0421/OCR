@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Hello World!"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <Button
@@ -29,12 +21,6 @@
         android:layout_height="40dp"
         android:text="拍照识别"/>
 
-
-    <Button
-        android:id="@+id/btn_3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="二值化测试图片"/>
     <Button
         android:id="@+id/btn_4"
         android:layout_width="match_parent"

@@ -29,9 +29,8 @@ import io.reactivex.schedulers.Schedulers;
 public class PreviewPresenter implements PreviewContract.IPresenter {
 
     private PreviewContract.IView mView;
-    private boolean isClip = false;
     private ArrayList<Disposable> disposables = new ArrayList<>();
-    private static final int maxActive = 4;
+    private static final int maxActive = 8;
     private PreviewContract.IModel model;
     private IDCardOCRHelper idCardOCRHelper;
 
@@ -93,9 +92,6 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
      */
     @Override
     public void analysisIDCard(final byte[] data,final Camera camera,final int svWidth,final int svHeight,final RectF scanRect,final RectF idCardRect) {
-//        if (isClip){
-//            return;
-//        }
         if (disposables == null) {
             disposables = new ArrayList<>();
         }
@@ -110,16 +106,13 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
             public void subscribe(ObservableEmitter<ScanResult> emitter) throws Exception {
                 Camera.Size previewSize = camera.getParameters().getPreviewSize();
 
-                isClip = true;
                 Bitmap idNumberBitmap = model.clipIDCardNumberBitmap(data, previewSize, idCardRect, svWidth, svHeight);
 
                 String tempPath = model.saveToSDCard(idNumberBitmap);
                 if (idCardOCRHelper == null || !idCardOCRHelper.hasInit()) {
-                    isClip = false;
                     return;
                 }
                 String id = idCardOCRHelper.doOCREngAnalysis(idNumberBitmap);
-                isClip = false;
                 Log.e("CG", "id = " + id);
 
                 if (id != null && (id.length() >= 18)) {
@@ -129,7 +122,6 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
 
 
                 if (tempPath == null) {
-                    isClip = false;
                     return;
                 }
 
@@ -161,7 +153,6 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        isClip = false;
                     }
 
                     @Override

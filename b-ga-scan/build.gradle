@@ -27,15 +27,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:appcompat-v7:${rootProject.appcompatv7Version}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // RxJava
-    api "io.reactivex.rxjava2:rxjava:${rootProject.rxjavaVersion}"
-    api "io.reactivex.rxjava2:rxandroid:${rootProject.rxandroidVersion}"
-    implementation 'com.rmtheis:tess-two:9.1.0'
-
-    implementation 'com.cv4j:cv4j:0.1.2'
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.rxjavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.rxandroidVersion}"
+    implementation "com.rmtheis:tess-two:${rootProject.tesstwoVersion}"
+    implementation "com.github.tbruyelle:rxpermissions:${rootProject.rxPermissionVersion}"
+    implementation "com.cv4j:cv4j:${rootProject.cv4jVersion}"
 }

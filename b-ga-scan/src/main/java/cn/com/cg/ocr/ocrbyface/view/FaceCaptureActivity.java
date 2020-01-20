@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+
+
 import cn.com.cg.ocr.R;
 import cn.com.cg.ocr.ocrbyface.customview.CameraPreviewViewWithRect;
 import cn.com.cg.ocr.ocrbyface.customview.intf.OnScanSuccessListener;
@@ -17,15 +19,15 @@ import cn.com.cg.ocr.ocrbyface.customview.intf.OnScanSuccessListener;
  */
 public class FaceCaptureActivity extends AppCompatActivity implements OnScanSuccessListener {
 
-    private CameraPreviewViewWithRect mSurfaceView;
+    private CameraPreviewViewWithRect surface_view;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tesseract_activity_facecapture);
+        surface_view = findViewById(R.id.surface_view);
+        surface_view.setListener(this);
 
-        mSurfaceView = findViewById(R.id.mSurfaceView);
-        mSurfaceView.setListener(this);
     }
 
     @Override
