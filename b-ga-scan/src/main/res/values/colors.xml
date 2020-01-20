@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ga_scan_scanColorPrimary">#242220</color>
+    <color name="ga_scan_scanColorPrimaryDark">#242220</color>
+    <color name="ga_scan_scanColorAccent">#108EE9</color>
+
+    <color name="ga_scan_statusbar_color">#000000</color>
+
+    <color name="ga_scan_white">#FFFFFF</color>
+    <color name="ga_scan_hint_white">#C0C0C0</color>
+    <color name="ga_scan_line_white">#DDDDDD</color>
+
+    <color name="ga_scan_mask_rect_color">#4480FF</color>
+    <color name="ga_scan_mask_corner_color">#2AA7FF</color>
+    <color name="ga_scan_text_blue">#4A90E2</color>
+    <color name="ga_scan_text_red">#FF0000</color>
+
+    <color name="ga_scan_text_black_color">#333333</color>
+    <color name="ga_scan_text_gray_color">#999999</color>
+    <color name="ga_scan_text_666">#666666</color>
+
+
+    <!-- 按钮颜色 白色系 -->
+    <color name="btn_color_white_normal">#FFFFFF</color>
+    <color name="btn_color_white_pressed">#E5E5E5</color>
+    <color name="btn_color_white_disable">#CCCCCC</color>
+</resources>

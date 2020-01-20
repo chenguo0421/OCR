@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">b-ga-scan</string>
+
+    <string name="ga_scan_pls_allow_camera_permission">获取权限失败</string>
+    <string name="ga_scan_idcard_hint">将身份证正面放入框内，自动扫描</string>
+</resources>

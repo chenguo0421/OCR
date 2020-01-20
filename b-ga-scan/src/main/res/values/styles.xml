@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="ScanActivityStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/ga_scan_scanColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ga_scan_scanColorPrimaryDark</item>
+        <item name="colorAccent">@color/ga_scan_scanColorAccent</item>
+    </style>
+
+</resources>
