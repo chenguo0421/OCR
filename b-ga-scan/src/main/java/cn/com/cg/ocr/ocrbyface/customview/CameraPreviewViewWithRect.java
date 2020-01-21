@@ -34,7 +34,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
     private static final String TAG = CameraPreviewViewWithRect.class.getSimpleName() + " ";
 
     private Camera mCamera;
-    private int cameraPosition = 1;//默认前摄
+    private int cameraPosition = 1;//默认后置
     private SurfaceView mSurfaceView;
     private ShowView mShowView;
     private Disposable focusDisposable;
@@ -323,7 +323,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
         float reqRatio = ((float) height) / width;
         float curRatio, deltaRatio;
         float deltaRatioMin = Float.MAX_VALUE;
-        Camera.Size retSize = null;
+        Camera.Size retSize = sizes.get(0);
         for (Camera.Size size : sizes) {
             curRatio = ((float) size.width) / size.height;
             deltaRatio = Math.abs(reqRatio - curRatio);
