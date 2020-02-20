@@ -270,7 +270,12 @@ public class CheckIDCardRule {
             ch = cardNumber.charAt(i);
             sum += ((int) (ch - '0')) * VERIFY_CODE_WEIGHT[i];
         }
-        return VERIFY_CODE[sum % 11];
+
+
+        if (sum > 0) {
+            return VERIFY_CODE[sum % 11];
+        }
+        return VERIFY_CODE[0];
     }
 
     /**
