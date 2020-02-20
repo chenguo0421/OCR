@@ -322,7 +322,7 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
         float reqRatio = ((float) height) / width;
         float curRatio, deltaRatio;
         float deltaRatioMin = Float.MAX_VALUE;
-        Camera.Size retSize = null;
+        Camera.Size retSize = sizes.get(0);
         for (Camera.Size size : sizes) {
             curRatio = ((float) size.width) / size.height;
             deltaRatio = Math.abs(reqRatio - curRatio);
