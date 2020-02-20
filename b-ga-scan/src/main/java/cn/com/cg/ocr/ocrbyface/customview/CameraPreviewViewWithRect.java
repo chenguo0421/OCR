@@ -149,8 +149,9 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
      * 间隔200毫秒捕捉一帧数据
      */
     private void oneShotFrame() {
+        mCamera.setOneShotPreviewCallback(CameraPreviewViewWithRect.this);
         if (oneShotDisposable == null) {
-            oneShotDisposable = Observable.interval(500, 500, TimeUnit.MILLISECONDS)
+            oneShotDisposable = Observable.interval(0, 500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(new Consumer<Long>() {
                         @Override
