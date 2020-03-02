@@ -23,6 +23,7 @@ public class ShowView extends View {
     private int cameraPosition = 1;//默认后置摄像头
 
     private RectF idRect = new RectF();
+    private RectF nameRect = new RectF();
 
     public ShowView(Context context) {
         super(context);
@@ -57,22 +58,74 @@ public class ShowView extends View {
                 mRect.set(face.rect);
                 mMatrix.mapRect(mRect);
 
-                idRect.left = (int) (mRect.left - 2 * (mRect.right - mRect.left));
-                idRect.right = (int) (mRect.right + (mRect.right - mRect.left) / 4);
-                idRect.top = (int) (mRect.bottom + 2 * (mRect.bottom - mRect.top) / 5);
-                idRect.bottom = (int) (mRect.bottom + 4 * (mRect.bottom - mRect.top) / 5);
+                //获取人脸图像中心点位置
+                float centerX = (mRect.right + mRect.left) / 2;
+                float centerY = (mRect.bottom + mRect.top) / 2;
+
+                //获取人脸Rect宽高
+                double faceRectW = mRect.right - mRect.left;
+
+                //调整偏移系数，纠正位置选取不正确问题
+                double pid = 1;
+                if (faceRectW < 79) {
+                    pid = 1.2;
+                }else if (79 < faceRectW && faceRectW < 99){
+                    pid = 1.1;
+                }else if (99 < faceRectW && faceRectW < 119){
+                    pid = 1;
+                }else if(119 < faceRectW && faceRectW < 139){
+                    pid = 0.9;
+                }else{
+                    pid = 0.8;
+                }
+
+                faceRectW = faceRectW * 1;
+
+//                Log.e("cg","faceW = " + faceRectW);
+
+                idRect.left = (int) (centerX - 2.8 * faceRectW);
+                idRect.right = (int) (centerX + 0.8 * faceRectW);
+                idRect.top = (int) (centerY + 1 * faceRectW);
+                idRect.bottom = (int) (centerY + 1.5 * faceRectW);
+
+
+                nameRect.left = (int) (centerX - 3.8 * faceRectW);
+                nameRect.right = (int) (centerX - 0.6 * faceRectW);
+                nameRect.top = (int) (centerY -  1.5 * faceRectW);
+                nameRect.bottom = (int) (centerY + 0.7 * faceRectW);
+
+
+
+
+//                idRect.left = (int) (mRect.left - 2 * (mRect.right - mRect.left));
+//                idRect.right = (int) (mRect.right + (mRect.right - mRect.left) / 4);
+//                idRect.top = (int) (mRect.bottom + 2 * (mRect.bottom - mRect.top) / 5);
+//                idRect.bottom = (int) (mRect.bottom + 4 * (mRect.bottom - mRect.top) / 5);
+//
+//
+//                nameRect.left = (int) (mRect.left - 2.8 * (mRect.right - mRect.left));
+//                nameRect.right = (int) (mRect.left - 1.2 * (mRect.right - mRect.left));
+//                nameRect.top = (int) (mRect.top - 3.2 * (mRect.bottom - mRect.top) / 5);
+//                nameRect.bottom = (int) (mRect.top - 1.2 * (mRect.bottom - mRect.top) / 5);
 
                 canvas.drawRect(mRect,myPaint);
                 canvas.drawRect(idRect,myPaint);
+                canvas.drawRect(nameRect,myPaint);
             }
         }
     }
 
 
-    public RectF getIDCardRect(){
+    private RectF getIDCardRect(){
         return idRect;
     }
+    private RectF getNameRect(){
+        return nameRect;
+    }
 
+    public RectF[] getAllCardRects() {
+        return new RectF[]{getNameRect(),getIDCardRect()};
+    }
 
     /**
      * 准备用于旋转的矩阵工具
@@ -93,5 +146,7 @@ public class ShowView extends View {
         matrix.postScale(viewWidth / 2000f, viewHeight / 2000f);
         matrix.postTranslate(viewWidth / 2f, viewHeight / 2f);
     }
+
+
 }
 

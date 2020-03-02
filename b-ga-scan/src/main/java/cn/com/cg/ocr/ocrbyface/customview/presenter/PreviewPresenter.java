@@ -30,7 +30,7 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
 
     private PreviewContract.IView mView;
     private ArrayList<Disposable> disposables = new ArrayList<>();
-    private static final int maxActive = 8;
+    private static final int maxActive = 4;
     private PreviewContract.IModel model;
     private IDCardOCRHelper idCardOCRHelper;
 
@@ -88,10 +88,10 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
      * @param svWidth
      * @param svHeight
      * @param scanRect
-     * @param idCardRect
+     * @param idCardRects
      */
     @Override
-    public void analysisIDCard(final byte[] data,final Camera camera,final int svWidth,final int svHeight,final RectF scanRect,final RectF idCardRect) {
+    public void analysisIDCard(final byte[] data,final Camera camera,final int svWidth,final int svHeight,final RectF scanRect,final RectF[] idCardRects) {
         if (disposables == null) {
             disposables = new ArrayList<>();
         }
@@ -104,37 +104,74 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
         Observable.create(new ObservableOnSubscribe<ScanResult>() {
             @Override
             public void subscribe(ObservableEmitter<ScanResult> emitter) throws Exception {
-                Camera.Size previewSize = camera.getParameters().getPreviewSize();
-
-                Bitmap idNumberBitmap = model.clipIDCardNumberBitmap(data, previewSize, idCardRect, svWidth, svHeight);
-
-                String tempPath = model.saveToSDCard(idNumberBitmap);
                 if (idCardOCRHelper == null || !idCardOCRHelper.hasInit()) {
                     return;
                 }
-                String id = idCardOCRHelper.doOCREngAnalysis(idNumberBitmap);
-                Log.e("CG", "id = " + id);
-
-                if (id != null && (id.length() >= 18)) {
-                    id = id.substring(id.length() - 18);
-                    Log.e("CG", "sub id = " + id);
-                }
-
-
-                if (tempPath == null) {
+                Camera.Size previewSize = camera.getParameters().getPreviewSize();
+                ScanResult idcardBean = new ScanResult();
+                Bitmap[] idNumberBitmaps = model.clipIDCardNumberBitmap(data, previewSize, idCardRects[1], svWidth, svHeight);
+                if (idNumberBitmaps == null) {
+                    emitter.onComplete();
                     return;
                 }
-
-
-                if (idNumberBitmap != null) {
-                    idNumberBitmap.recycle();
+                String[] paths = new String[idNumberBitmaps.length];
+                for (int i = 0; i < idNumberBitmaps.length; i++) {
+                    paths[i] = model.saveToSDCard(idNumberBitmaps[i]);
+                    Log.e("CG", "path[" + i + "] = " + paths[i]);
                 }
 
-                ScanResult idcardBean = new ScanResult();
-                idcardBean.id = id;
-                idcardBean.path = tempPath;
-                emitter.onNext(idcardBean);
+
+//                Bitmap nameBitmap = model.clipIDCardNumberBitmap(data, previewSize, idCardRects[0], svWidth, svHeight);
+//                String namePath = model.saveToSDCard(nameBitmap);
+
+                for (int i = 0; i < idNumberBitmaps.length; i++) {
+                    String id = idCardOCRHelper.doOCREngAnalysis(idNumberBitmaps[i]);
+                    Log.e("CG", "id = " + id);
+
+                    if (id != null && (id.length() >= 18)) {
+                        id = id.substring(id.length() - 18);
+                        Log.e("CG", "sub id = " + id);
+                    }
+                    if (paths[i] == null) {
+                        continue;
+                    }
+                    if (idNumberBitmaps[i] != null) {
+                        idNumberBitmaps[i].recycle();
+                    }
+                    ScanResult scanResult = IDCardRegxUtils.checkIdCard(id);
+                    if (scanResult == null) {
+                        continue;
+                    }else {
+                        scanResult.idPath = paths[i];
+                        emitter.onNext(scanResult);
+                        emitter.onComplete();
+                        return;
+                    }
+                }
+
                 emitter.onComplete();
+
+//                String name = idCardOCRHelper.doOCRChiAnalysis(nameBitmap);
+//                Log.e("CG", "name = " + name);
+
+
+
+
+
+
+//                if (namePath == null) {
+//                    return;
+//                }
+
+
+
+//                if (nameBitmap != null) {
+//                    nameBitmap.recycle();
+//                }
+
+
+//                idcardBean.name = name;
+
 
             }
         })
@@ -150,12 +187,13 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
                     public void onNext(ScanResult bean) {
                         if (bean != null) {
                             Log.e("CG", "onNext id = " + bean.id);
-                            checkIDOCRResult(bean.id, bean.path);
+                            checkIDOCRResult(bean);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("CG", "onError msg = " + e.getMessage());
                     }
 
                     @Override
@@ -174,13 +212,13 @@ public class PreviewPresenter implements PreviewContract.IPresenter {
     /**
      * 检验身份证ocr结果
      *
-     * @param id
-     * @param tempFilePath
+     * @param bean
      */
-    private void checkIDOCRResult(String id, String tempFilePath) {
-        ScanResult scanResult = IDCardRegxUtils.checkIdCard(id);
+    private void checkIDOCRResult(ScanResult bean) {
+        ScanResult scanResult = IDCardRegxUtils.checkIdCard(bean.id);
         if (scanResult != null) {
-            scanResult.path = tempFilePath;
+            scanResult.idPath = bean.idPath;
+            scanResult.name = bean.name;
             mView.onOCRSuccess(scanResult);
         }
     }

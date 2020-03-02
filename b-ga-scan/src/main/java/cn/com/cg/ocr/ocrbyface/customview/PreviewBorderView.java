@@ -10,6 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import cn.com.cg.ocr.common.utils.DeviceUtils;
+
 /**
  * Discription  { 图片采集框 }
  * author  chenguo7
@@ -26,6 +28,8 @@ public class PreviewBorderView extends View {
     private static final String DEFAULT_TIPS_TEXT = "请将身份证照片置于框内,并尽量对齐边框";
     private String tipText = DEFAULT_TIPS_TEXT;
     private RectF borderRect;
+    private int screenHight;
+    private int screenWidth;
 
     public PreviewBorderView(Context context) {
         super(context);
@@ -77,12 +81,15 @@ public class PreviewBorderView extends View {
         this.mTextPaint.setColor(Color.WHITE);
         this.mTextPaint.setStrokeWidth(3.0F);
 
+        screenWidth = DeviceUtils.getScreenWidth(getContext());
+        screenHight = DeviceUtils.getScreenHeight(getContext());
+
         setKeepScreenOn(true);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(1080,1920);
+        setMeasuredDimension(screenWidth,screenHight);
     }
 
     public RectF getBorderRect(){

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import cn.com.cg.ocr.R;
 import cn.com.cg.ocr.common.bean.ScanResult;
 import cn.com.cg.ocr.common.intf.OnScanSuccessListener;
+import cn.com.cg.ocr.common.utils.VibratorUtils;
 import cn.com.cg.ocr.ocrbyface.customview.CameraPreviewViewWithRect;
 
 /**
@@ -33,7 +34,8 @@ public class FaceCaptureActivity extends AppCompatActivity implements OnScanSucc
 
     @Override
     public void onOCRSuccess(ScanResult bean) {
+        VibratorUtils.start(this);
         Log.e("CG", "onOCRSuccess id = " + bean.id);
-        Toast.makeText(this,"id = "+bean.id + " 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"id = "+bean.id + " 姓名 = " + bean.name +" 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
     }
 }

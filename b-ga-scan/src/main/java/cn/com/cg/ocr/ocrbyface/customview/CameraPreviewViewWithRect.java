@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -247,7 +248,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
      */
     private void autoFocus() {
         if (focusDisposable == null) {
-            focusDisposable = Observable.interval(500,3000, TimeUnit.MILLISECONDS)
+            focusDisposable = Observable.interval(500,2000, TimeUnit.MILLISECONDS)
                     .observeOn(Schedulers.newThread())
                     .subscribe(new Consumer<Long>() {
                         @Override
@@ -368,7 +369,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         if (mPresenter != null) {
-            mPresenter.analysisIDCard(data,camera,getWidth(),getHeight(),getBorderRect(),getIdCardRect());
+            mPresenter.analysisIDCard(data,camera,getWidth(),getHeight(),getBorderRect(),getIdCardRects());
         }
     }
 
@@ -376,9 +377,9 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
      * 获取证件号码框Rect
      * @return
      */
-    private RectF getIdCardRect(){
+    private RectF[] getIdCardRects(){
         if (mShowView != null) {
-            return mShowView.getIDCardRect();
+            return mShowView.getAllCardRects();
         }
         return null;
     }

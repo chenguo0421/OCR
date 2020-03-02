@@ -105,9 +105,11 @@ public class IDCardOCRHelper {
 //            mEngApi.setVariable("tessedit_char_whitelist", "0123456789Xx");
 //            mEngApi.setVariable("tessedit_char_whitelist","陈果男汉湖北省阳新县木港镇坳头村伯清8号姓名性别民族出生年月日住址公民身份号码");
             mEngApi.setVariable("tessedit_char_whitelist","0123456789Xx");
-//            mChiApi = new TessBaseAPI();
-//            mChiApi.init(mSdPath, "chi_sim");
-//            mChiApi.setVariable("tessedit_char_whitelist","姓名性别民族出生年月日住址公民身份号码");
+
+
+            mChiApi = new TessBaseAPI();
+            mChiApi.init(mSdPath, "chi_sim");
+            mChiApi.setVariable("tessedit_char_whitelist","姓名性别民族出生年月日住址公民身份号码陈果吴丽敏男女汉湖北省阳新县木港镇坳头村伯清号1234567890");
 
             Log.e("ScanActivity", "init end " + (System.currentTimeMillis() - time));
             finishInit = true;
@@ -123,6 +125,9 @@ public class IDCardOCRHelper {
         mEngApi.setImage(bitmap8888);
         String text = mEngApi.getUTF8Text();
         mEngApi.clear();
+        if (bitmap != null) {
+            bitmap.recycle();
+        }
         bitmap8888.recycle();
         return text;
     }
@@ -132,6 +137,9 @@ public class IDCardOCRHelper {
         mChiApi.setImage(bitmap8888);
         String text = mChiApi.getUTF8Text();
         mChiApi.clear();
+        if (bitmap != null) {
+            bitmap.recycle();
+        }
         bitmap8888.recycle();
         return text;
     }

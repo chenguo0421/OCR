@@ -45,7 +45,7 @@ public class PreviewModel implements PreviewContract.IModel {
      * @return
      */
     @Override
-    public Bitmap clipIDCardNumberBitmap(byte[] data, Camera.Size previewSize, RectF idCardRect, int svWidth, int svHeight) {
+    public Bitmap[] clipIDCardNumberBitmap(byte[] data, Camera.Size previewSize, RectF idCardRect, int svWidth, int svHeight) {
         ByteArrayOutputStream baos;
         byte[] rawImage;
         Bitmap bitmap;
@@ -81,6 +81,7 @@ public class PreviewModel implements PreviewContract.IModel {
             Log.e("CG", "bitmap is nlll");
             return null;
         } else {
+            Bitmap[] bitmaps = new Bitmap[3];
             int height = bitmap.getHeight();
             int width = bitmap.getWidth();
             float heightRatio = svWidth * 1.0f / height;
@@ -90,22 +91,44 @@ public class PreviewModel implements PreviewContract.IModel {
             int right = (int) (idCardRect.bottom / withRatio);
             int bottom = (int) ((svWidth - idCardRect.left) / heightRatio);
 
-            Bitmap bitmap1 = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top);
+            int offset = (int) ((idCardRect.bottom - idCardRect.top) / 4);
+            if (bitmap.getWidth() > bitmap.getHeight()){
+                Bitmap bitmap0 = Bitmap.createBitmap(bitmap, left - offset, top, right - left, bottom - top);
+                Bitmap bitmap1 = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top);
+                Bitmap bitmap2 = Bitmap.createBitmap(bitmap, left + offset, top, right - left, bottom - top);
+                bitmaps[0] = roteBitmap(bitmap0);
+                bitmaps[1] = roteBitmap(bitmap1);
+                bitmaps[2] = roteBitmap(bitmap2);
+            }else {
+                Bitmap bitmap0 = Bitmap.createBitmap(bitmap, left, top - offset, right - left, bottom - top);
+                Bitmap bitmap1 = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top);
+                Bitmap bitmap2 = Bitmap.createBitmap(bitmap, left, top + offset, right - left, bottom - top);
+                bitmaps[0] = roteBitmap(bitmap0);
+                bitmaps[1] = roteBitmap(bitmap1);
+                bitmaps[2] = roteBitmap(bitmap2);
+            }
+
+
+
+
+
             bitmap.recycle();
 
-            /**
-             * 若宽>高,需要旋转图片
-             */
-            if (bitmap1.getWidth() < bitmap1.getHeight()) {
-                Bitmap bitmap2 = rotateClippedBitmap(90, bitmap1);
-                bitmap1.recycle();
-                return bitmap2;
-            }
-            return bitmap1;
+            return bitmaps;
         }
     }
 
-
+    private Bitmap roteBitmap(Bitmap bitmap) {
+        /**
+         * 若宽>高,需要旋转图片
+         */
+        if (bitmap.getWidth() < bitmap.getHeight()) {
+            Bitmap bitmap2 = rotateClippedBitmap(90, bitmap);
+            bitmap.recycle();
+            return bitmap2;
+        }
+        return bitmap;
+    }
 
 
     /**

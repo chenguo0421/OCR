@@ -12,5 +12,6 @@ public class ScanResult {
     public String birthday;//出生年月日 ‘19940421’
     public String nation;//民族  汉
     public String address;//住址
-    public String path;//证件号码裁剪图片在SDcard位置
+    public String idPath;//证件号码裁剪图片在SDcard位置
+
 }

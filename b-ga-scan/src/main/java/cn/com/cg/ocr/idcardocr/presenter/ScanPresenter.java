@@ -130,7 +130,7 @@ public class ScanPresenter implements ScanContract.Presenter {
 
                 ScanResult idcardBean = new ScanResult();
                 idcardBean.id = id;
-                idcardBean.path = tempPath;
+                idcardBean.idPath = tempPath;
                 emitter.onNext(idcardBean);
                 emitter.onComplete();
             }
@@ -146,7 +146,7 @@ public class ScanPresenter implements ScanContract.Presenter {
                     @Override
                     public void onNext(ScanResult bean) {
                         if (bean != null) {
-                            checkIDOCRResult(bean.id, bean.path);
+                            checkIDOCRResult(bean.id, bean.idPath);
                         }
                     }
 
@@ -171,7 +171,7 @@ public class ScanPresenter implements ScanContract.Presenter {
     private void checkIDOCRResult(String id, String tempFilePath) {
         ScanResult scanResult = IDCardRegxUtils.checkIdCard(id);
         if (scanResult != null) {
-            scanResult.path = tempFilePath;
+            scanResult.idPath = tempFilePath;
             mView.onOCRSuccess(scanResult);
         }
     }

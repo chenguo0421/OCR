@@ -23,7 +23,7 @@ public interface PreviewContract {
     
     interface IPresenter{
 
-        void analysisIDCard(byte[] data, Camera camera, int width, int height, RectF borderRect, RectF idCardRect);
+        void analysisIDCard(byte[] data, Camera camera, int width, int height, RectF borderRect, RectF[] idCardRect);
 
         void ondestroy();
     }
@@ -32,6 +32,6 @@ public interface PreviewContract {
 
         String saveToSDCard(Bitmap clipedBitmap);
 
-        Bitmap clipIDCardNumberBitmap(byte[] data, Camera.Size previewSize, RectF idCardRect, int svWidth, int svHeight);
+        Bitmap[] clipIDCardNumberBitmap(byte[] data, Camera.Size previewSize, RectF idCardRect, int svWidth, int svHeight);
     }
 }
