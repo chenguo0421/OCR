@@ -16,12 +16,12 @@ import java.io.IOException;
 public class FileUtils {
 
 
-
+    public static String catchPath = Environment.getExternalStorageDirectory() + "/CoolImage/";
 
     public static String saveToSDCard(Bitmap bitmap) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) // 判断是否可以对SDcard进行操作
         {    // 获取SDCard指定目录下
-            String sdCardDir = Environment.getExternalStorageDirectory() + "/CoolImage/";
+            String sdCardDir = catchPath;
             File dirFile = new File(sdCardDir);  //目录转化成文件夹
             if (!dirFile.exists()) {              //如果不存在，那就建立这个文件夹
                 dirFile.mkdirs();
@@ -46,4 +46,39 @@ public class FileUtils {
 
         return null;
     }
+
+
+    public static void deleteCatchImageFile(){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // 获取SDCard指定目录下
+            String sdCardDir = catchPath;
+            File dirFile = new File(sdCardDir);  //目录转化成文件夹
+            if (dirFile.exists()) {              //如果存在，则删除
+                recursionDeleteFile(dirFile);
+            }
+        }
+    }
+
+    /**
+     * 递归删除文件和文件夹
+     * @param file    要删除的根目录
+     */
+    private static void recursionDeleteFile(File file){
+        if(file.isFile()){
+            file.delete();
+            return;
+        }
+        if(file.isDirectory()){
+            File[] childFile = file.listFiles();
+            if(childFile == null || childFile.length == 0){
+                file.delete();
+                return;
+            }
+            for(File f : childFile){
+                recursionDeleteFile(f);
+            }
+            file.delete();
+        }
+    }
+
 }

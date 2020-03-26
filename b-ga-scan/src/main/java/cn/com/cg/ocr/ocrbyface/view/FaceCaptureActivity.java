@@ -33,9 +33,15 @@ public class FaceCaptureActivity extends AppCompatActivity implements OnScanSucc
     }
 
     @Override
-    public void onOCRSuccess(ScanResult bean) {
+    public void onOCRSuccess(final ScanResult bean) {
         VibratorUtils.start(this);
         Log.e("CG", "onOCRSuccess id = " + bean.id);
-        Toast.makeText(this,"id = "+bean.id + " 姓名 = " + bean.name +" 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(FaceCaptureActivity.this,"id = "+bean.id + " 姓名 = " + bean.name +" 性别 = " + bean.sex + " 出生年月 = " + bean.birthday + "民族 = " + bean.nation,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -102,14 +102,12 @@ public class IDCardOCRHelper {
             Log.e("ScanActivity", "init " + time);
             mEngApi = new TessBaseAPI();
             mEngApi.init(mSdPath, "eng");
-//            mEngApi.setVariable("tessedit_char_whitelist", "0123456789Xx");
-//            mEngApi.setVariable("tessedit_char_whitelist","陈果男汉湖北省阳新县木港镇坳头村伯清8号姓名性别民族出生年月日住址公民身份号码");
             mEngApi.setVariable("tessedit_char_whitelist","0123456789Xx");
 
 
             mChiApi = new TessBaseAPI();
             mChiApi.init(mSdPath, "chi_sim");
-            mChiApi.setVariable("tessedit_char_whitelist","姓名性别民族出生年月日住址公民身份号码陈果吴丽敏男女汉湖北省阳新县木港镇坳头村伯清号1234567890");
+//            mChiApi.setVariable("tessedit_char_whitelist","");
 
             Log.e("ScanActivity", "init end " + (System.currentTimeMillis() - time));
             finishInit = true;
@@ -121,26 +119,22 @@ public class IDCardOCRHelper {
 
 
     public synchronized String doOCREngAnalysis(Bitmap bitmap) {
-        Bitmap bitmap8888 = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        mEngApi.setImage(bitmap8888);
+        mEngApi.setImage(bitmap);
         String text = mEngApi.getUTF8Text();
         mEngApi.clear();
         if (bitmap != null) {
             bitmap.recycle();
         }
-        bitmap8888.recycle();
         return text;
     }
 
     public synchronized String doOCRChiAnalysis(Bitmap bitmap) {
-        Bitmap bitmap8888 = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        mChiApi.setImage(bitmap8888);
+        mChiApi.setImage(bitmap);
         String text = mChiApi.getUTF8Text();
         mChiApi.clear();
         if (bitmap != null) {
             bitmap.recycle();
         }
-        bitmap8888.recycle();
         return text;
     }
 

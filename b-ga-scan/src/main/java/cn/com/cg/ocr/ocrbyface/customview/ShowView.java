@@ -24,6 +24,7 @@ public class ShowView extends View {
 
     private RectF idRect = new RectF();
     private RectF nameRect = new RectF();
+    private RectF nationRect = new RectF();
 
     public ShowView(Context context) {
         super(context);
@@ -95,22 +96,15 @@ public class ShowView extends View {
                 nameRect.bottom = (int) (centerY + 0.7 * faceRectW);
 
 
-
-
-//                idRect.left = (int) (mRect.left - 2 * (mRect.right - mRect.left));
-//                idRect.right = (int) (mRect.right + (mRect.right - mRect.left) / 4);
-//                idRect.top = (int) (mRect.bottom + 2 * (mRect.bottom - mRect.top) / 5);
-//                idRect.bottom = (int) (mRect.bottom + 4 * (mRect.bottom - mRect.top) / 5);
-//
-//
-//                nameRect.left = (int) (mRect.left - 2.8 * (mRect.right - mRect.left));
-//                nameRect.right = (int) (mRect.left - 1.2 * (mRect.right - mRect.left));
-//                nameRect.top = (int) (mRect.top - 3.2 * (mRect.bottom - mRect.top) / 5);
-//                nameRect.bottom = (int) (mRect.top - 1.2 * (mRect.bottom - mRect.top) / 5);
+                nationRect.left = (int) (centerX - 2.2 * faceRectW);
+                nationRect.right = (int) (centerX - 1 * faceRectW);
+                nationRect.top = (int) (centerY -  0.7 * faceRectW);
+                nationRect.bottom = (int) (centerY - 0.3 * faceRectW);
 
                 canvas.drawRect(mRect,myPaint);
                 canvas.drawRect(idRect,myPaint);
-                canvas.drawRect(nameRect,myPaint);
+//                canvas.drawRect(nameRect,myPaint);
+                canvas.drawRect(nationRect,myPaint);
             }
         }
     }
@@ -122,9 +116,10 @@ public class ShowView extends View {
     private RectF getNameRect(){
         return nameRect;
     }
+    private RectF getNationRect(){return nationRect;}
 
     public RectF[] getAllCardRects() {
-        return new RectF[]{getNameRect(),getIDCardRect()};
+        return new RectF[]{getNameRect(),getIDCardRect(),getNationRect()};
     }
 
     /**

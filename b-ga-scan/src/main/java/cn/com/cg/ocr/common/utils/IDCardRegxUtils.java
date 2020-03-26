@@ -113,4 +113,22 @@ public class IDCardRegxUtils {
         cityMap.put("91", "国外");
         return cityMap;
     }
+
+    
+    public static String[] nations = new String[]{
+            "汉","壮","回","满","维吾尔","苗","彝","土家","藏","蒙古","侗","布依","瑶","白","朝鲜","哈尼","黎","哈萨克","傣","畲","傈僳","东乡","仡佬","拉祜","佤","水","纳西","羌","土","仫佬","锡伯","柯尔克孜","景颇","达斡尔","撒拉","布朗","毛南","塔吉克","普米","阿昌","怒","鄂温克","京","基诺","德昂","保安","俄罗斯","裕固","乌孜别克","门巴","鄂伦春","独龙","赫哲","高山","珞巴","塔塔尔族"
+    };
+
+    public static String checkNation(String nation) {
+        if (nation == null) {
+            return null;
+        }
+
+        for (int i = 0; i < nations.length; i++) {
+            if (nation.contains(nations[i])){
+                return nations[i];
+            }
+        }
+        return null;
+    }
 }

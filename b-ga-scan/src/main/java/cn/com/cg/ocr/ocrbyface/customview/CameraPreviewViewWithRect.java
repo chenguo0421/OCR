@@ -152,7 +152,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
     private void oneShotFrame() {
         mCamera.setOneShotPreviewCallback(CameraPreviewViewWithRect.this);
         if (oneShotDisposable == null) {
-            oneShotDisposable = Observable.interval(0, 500, TimeUnit.MILLISECONDS)
+            oneShotDisposable = Observable.interval(0, 200, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(new Consumer<Long>() {
                         @Override
@@ -369,7 +369,7 @@ public class CameraPreviewViewWithRect extends FrameLayout implements Camera.Pre
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         if (mPresenter != null) {
-            mPresenter.analysisIDCard(data,camera,getWidth(),getHeight(),getBorderRect(),getIdCardRects());
+            mPresenter. analysisIDCard(data,camera,getWidth(),getHeight(),getIdCardRects());
         }
     }
 
