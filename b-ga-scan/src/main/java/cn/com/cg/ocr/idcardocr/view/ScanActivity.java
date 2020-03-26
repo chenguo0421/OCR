@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.com.cg.ocr.R;
 import cn.com.cg.ocr.common.bean.ScanResult;
+import cn.com.cg.ocr.common.utils.VibratorUtils;
 import cn.com.cg.ocr.idcardocr.contract.ScanContract;
 import cn.com.cg.ocr.idcardocr.presenter.ScanPresenter;
 import cn.com.cg.ocr.idcardocr.utils.DisplayUtil;
@@ -141,6 +142,7 @@ public class ScanActivity extends AppCompatActivity implements ScanContract.View
 
     @Override
     public void onOCRSuccess( ScanResult bean) {
+        VibratorUtils.start(this);
         Log.e("CG", "onOCRSuccess id = " + bean.id);
         Toast.makeText(this,"id = "+bean.id + " 性别 = " + bean.sex + " 出生年月 = " + bean.birthday,Toast.LENGTH_SHORT).show();
     }

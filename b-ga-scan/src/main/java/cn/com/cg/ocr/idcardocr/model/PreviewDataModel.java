@@ -53,7 +53,7 @@ public class PreviewDataModel {
         }
         //将rawImage转换成bitmap
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         bitmap = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length, options);
         Log.e("CG", "start BinaryImage");
 //        bitmap = ImageUtils.binaryImg(bitmap);
