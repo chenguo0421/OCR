@@ -33,7 +33,7 @@ public class ScanPresenter implements ScanContract.Presenter {
     private final Context mContext;
     private final PreviewDataModel mPreViewDataModel;
     private IDCardOCRHelper idCardOCRHelper;
-    private static final int maxActive = 8;
+    private static final int maxActive = 4;
     private ArrayList<Disposable> disposables = new ArrayList<>();
 
     public ScanPresenter(final Context context, ScanContract.View view) {

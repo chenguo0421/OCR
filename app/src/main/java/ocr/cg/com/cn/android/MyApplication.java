@@ -24,7 +24,7 @@ public class MyApplication extends Application {
         CrashHandler.getInstance().init(this);
         //每次使用前，清除历史图片缓存
         FileUtils.deleteCatchImageFile();
-        refWatcher= setupLeakCanary();
+//        refWatcher= setupLeakCanary();
     }
 
     private RefWatcher setupLeakCanary() {

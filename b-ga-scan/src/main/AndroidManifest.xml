@@ -34,7 +34,9 @@
         <activity
             android:name=".testocr.ResultActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".ocrbyphoto.view.ScanWithPhotoActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

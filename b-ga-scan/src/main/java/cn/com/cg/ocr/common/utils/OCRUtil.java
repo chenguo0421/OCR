@@ -10,6 +10,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import cn.com.cg.ocr.idcardocr.view.ScanActivity;
 import cn.com.cg.ocr.ocrbyface.view.FaceCaptureActivity;
+import cn.com.cg.ocr.ocrbyphoto.view.ScanWithPhotoActivity;
 import cn.com.cg.ocr.testocr.MainActivity;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -61,7 +62,7 @@ public class OCRUtil {
             @Override
             public void onNext(Boolean permisionOK) {
                 if (permisionOK){
-                    activity.startActivity(new Intent(activity, MainActivity.class));
+                    activity.startActivity(new Intent(activity, ScanWithPhotoActivity.class));
                 }else {
                     onPermissionLost(activity);
                 }
